@@ -321,6 +321,8 @@ namespace SuperAdventure
                 _player.Gold += _currentMonster.RewardGold;
                 rtbMessages.Text += "You receive " + _currentMonster.RewardGold.ToString() + " gold" + Environment.NewLine;
 
+                ScrollToBottomOfMessages();
+
                 // Get random loot items from the monster
                 List<InventoryItem> lootedItems = new List<InventoryItem>();
 
@@ -358,6 +360,7 @@ namespace SuperAdventure
                     {
                         rtbMessages.Text += "You loot " + inventoryItem.Quantity.ToString() + " " + inventoryItem.Details.NamePlural + Environment.NewLine;
                     }
+                    ScrollToBottomOfMessages();
                 }
 
                 // Refresh player information and inventory controls
@@ -400,6 +403,8 @@ namespace SuperAdventure
                     // Move player to "Home"
                     MoveTo(World.LocationByID(World.LOCATION_ID_HOME));
                 }
+
+                ScrollToBottomOfMessages();
             }
         }
 
@@ -454,6 +459,13 @@ namespace SuperAdventure
             lblHitPoints.Text = _player.CurrentHitPoints.ToString();
             UpdateInventoryListInUI();
             UpdatePotionListInUI();
+            ScrollToBottomOfMessages();
+        }
+
+        private void ScrollToBottomOfMessages()
+        {
+            rtbMessages.SelectionStart = rtbMessages.Text.Length;
+            rtbMessages.ScrollToCaret();
         }
     }
 }
